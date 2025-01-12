@@ -9,6 +9,7 @@ let castInRegister = 100;
 let nextOrderId = 1;
 const orderQueue = [];
 
+// Defensive coding
 function addNewPizza(pizzaObj) {
     menu.push(pizzaObj);
 }
@@ -20,12 +21,16 @@ function addNewPizza(pizzaObj) {
 // *    (e.g. { pizza: selectedPizzaObjectFromStep1, status: "ordered" })
 // * 4. returns the new order object (just in case we need it later)
 
+// Defensive coding
 function placeOrder(pizzaName) {
-   const selectedPizza = menu.filter(pizzaObj => pizzaObj.name === pizzaName);
+    // Defensive coding
+    // @ts-ignore
+    const selectedPizza = menu.find(pizzaObj => pizzaObj.name === pizzaName); // replace find to filter
    if (!selectedPizza) {
        console.log(`${pizzaName} does not exist in the menu`);
        return;
    }
+    // Defensive coding
     castInRegister += selectedPizza.price;
     const newOrder = { id: nextOrderId++, pizza: selectedPizza, status: "ordered"};
     orderQueue.push(newOrder);
@@ -40,18 +45,20 @@ function placeOrder(pizzaName) {
  * Note: you'll need to ensure that we're adding IDs to our orders when we create new orders. You can use a global `nextOrderId` variable and increment it every time a new order is created to simulate real IDs being managed for us by a database.
  */
 
-function completeOrder(orderId) {
+function completeOrder(orderId: number) {
     const orderComplete = orderQueue.filter(order => order.id === orderId);
+    // Defensive coding
+    // @ts-ignore
     orderComplete.status = "completed";
     return orderComplete;
 }
 
-addNewPizza({ name: "Chicken Bacon Ranch", price: 12});
-addNewPizza({ name: "BBQ Chicken", price: 12});
-addNewPizza({ name: "Spicy Sausage", price: 11});
+addNewPizza({ name: "Chicken Bacon Ranch", cost: 12});
+addNewPizza({ name: "BBQ Chicken", cost: 12});
+addNewPizza({ name: "Spicy Sausage", cost: 11});
 
 placeOrder("BBQ Chicken");
-completeOrder("2");
+completeOrder(1);
 
 console.log("Menu:", menu);
 console.log("Cash in register:", castInRegister);
