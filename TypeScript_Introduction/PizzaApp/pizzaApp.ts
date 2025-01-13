@@ -1,3 +1,21 @@
+/**
+ * Challenge 3: Create a Pizza object type. It should include a `name` and a `price` property
+ */
+type Pizza = {
+    name: string,
+    price: number,
+}
+
+/*
+* Challenge 5: Add an order type. It should have `id`, `pizza`, and `status` properties.
+* Look through the code if you need a reminder as to what data types those should be
+* */
+type Order = {
+    id: number,
+    pizza: Pizza,
+    status: string
+}
+
 const menu = [
     { name: "Margherita", price: 8},
     { name: "Pepperoni", price: 10},
@@ -7,24 +25,30 @@ const menu = [
 
 let castInRegister = 100;
 let nextOrderId = 1;
-const orderQueue = [];
+const orderQueue: Order[] = [];
+
+/*
+* Challenge 4: teach TS that the pizzaObj is supposed to be a pizza type
+* Then like before, look through the code to see if there are any new
+* Ts warnings to deal with, and fix those issues.
+* */
 
 // Defensive coding
-function addNewPizza(pizzaObj) {
+function addNewPizza(pizzaObj: Pizza) {
     menu.push(pizzaObj);
 }
 
-// Write another utility function, placeOrder, that takes a pizza name parameter and:
-// * 1. finds that pizza object in the menu,
-// * 2. adds the income to the cashInRegister,
-// * 3. pushes a new "order object" to the orderQueue
-// *    (e.g. { pizza: selectedPizzaObjectFromStep1, status: "ordered" })
-// * 4. returns the new order object (just in case we need it later)
+/* Challenge 1: Write another utility function, placeOrder, that takes a pizza name parameter and:
+* 1. finds that pizza object in the menu,
+* 2. adds the income to the cashInRegister,
+* 3. pushes a new "order object" to the orderQueue
+*    (e.g. { pizza: selectedPizzaObjectFromStep1, status: "ordered" })
+* 4. returns the new order object (just in case we need it later)
+* */
 
 // Defensive coding
-function placeOrder(pizzaName) {
+function placeOrder(pizzaName: string) {
     // Defensive coding
-    // @ts-ignore
     const selectedPizza = menu.find(pizzaObj => pizzaObj.name === pizzaName); // replace find to filter
    if (!selectedPizza) {
        console.log(`${pizzaName} does not exist in the menu`);
@@ -38,7 +62,7 @@ function placeOrder(pizzaName) {
 }
 
 /**
- * Challenge: write another utility function, completeOrder, that takes an orderId as a parameter
+ * Challenge 2: write another utility function, completeOrder, that takes an orderId as a parameter
  * finds the correct order in the orderQueue, and marks its status as "completed". For good measure,
  * return the found order from the function.
  *
@@ -46,16 +70,19 @@ function placeOrder(pizzaName) {
  */
 
 function completeOrder(orderId: number) {
-    const orderComplete = orderQueue.filter(order => order.id === orderId);
+    const orderComplete = orderQueue.find(order => order.id === orderId);
     // Defensive coding
-    // @ts-ignore
+    if(!orderComplete) {
+        console.error(`${orderId} was not found in the orderQueue`);
+        return;
+    }
     orderComplete.status = "completed";
     return orderComplete;
 }
 
-addNewPizza({ name: "Chicken Bacon Ranch", cost: 12});
-addNewPizza({ name: "BBQ Chicken", cost: 12});
-addNewPizza({ name: "Spicy Sausage", cost: 11});
+addNewPizza({ name: "Chicken Bacon Ranch", price: 12});
+addNewPizza({ name: "BBQ Chicken", price: 12});
+addNewPizza({ name: "Spicy Sausage", price: 11});
 
 placeOrder("BBQ Chicken");
 completeOrder(1);
