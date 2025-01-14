@@ -4,7 +4,7 @@ type Address = {
     country: string
 }
 
-type Person = {
+export type Person = {
     name: string,
     age: number,
     isStudent: boolean,

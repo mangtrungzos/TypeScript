@@ -9,7 +9,7 @@ let numberOfWheels: number = 4;
 let isStudent: boolean = true;
 
 // 2. Defining Custom Types
-type Person = {
+export type Person = {
     name: string,
     age: number,
     isStudent: boolean
