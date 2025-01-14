@@ -2,6 +2,7 @@
  * Challenge 3: Create a Pizza object type. It should include a `name` and a `price` property
  */
 type Pizza = {
+    id: number,
     name: string,
     price: number,
 }
@@ -9,18 +10,22 @@ type Pizza = {
 /*
 * Challenge 5: Add an order type. It should have `id`, `pizza`, and `status` properties.
 * Look through the code if you need a reminder as to what data types those should be
+*
+* Challenge 6: using literal types and unions, update the Order status so that
+* it can only ever be "ordered" or "completed"
 * */
+
 type Order = {
     id: number,
     pizza: Pizza,
-    status: string
+    status: "ordered" | "completed"
 }
 
-const menu = [
-    { name: "Margherita", price: 8},
-    { name: "Pepperoni", price: 10},
-    { name: "Hawaiian", price: 10},
-    { name: "Veggie", price: 9},
+const menu: Pizza[] = [
+    { id: 1,name: "Margherita", price: 8},
+    { id: 2,name: "Pepperoni", price: 10},
+    { id: 3,name: "Hawaiian", price: 10},
+    { id: 4,name: "Veggie", price: 9},
 ]
 
 let castInRegister = 100;
@@ -56,7 +61,7 @@ function placeOrder(pizzaName: string) {
    }
     // Defensive coding
     castInRegister += selectedPizza.price;
-    const newOrder = { id: nextOrderId++, pizza: selectedPizza, status: "ordered"};
+    const newOrder: Order = { id: nextOrderId++, pizza: selectedPizza, status: "ordered"};
     orderQueue.push(newOrder);
     return newOrder;
 }
@@ -80,9 +85,9 @@ function completeOrder(orderId: number) {
     return orderComplete;
 }
 
-addNewPizza({ name: "Chicken Bacon Ranch", price: 12});
-addNewPizza({ name: "BBQ Chicken", price: 12});
-addNewPizza({ name: "Spicy Sausage", price: 11});
+addNewPizza({ id: 5, name: "Chicken Bacon Ranch", price: 12});
+addNewPizza({ id: 6, name: "BBQ Chicken", price: 12});
+addNewPizza({ id: 7, name: "Spicy Sausage", price: 11});
 
 placeOrder("BBQ Chicken");
 completeOrder(1);
