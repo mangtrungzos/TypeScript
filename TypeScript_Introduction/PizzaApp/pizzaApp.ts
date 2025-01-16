@@ -39,7 +39,7 @@ const orderQueue: Order[] = [];
 * */
 
 // Defensive coding
-function addNewPizza(pizzaObj: Pizza) {
+function addNewPizza(pizzaObj: Pizza): void {
     menu.push(pizzaObj);
 }
 
@@ -51,8 +51,13 @@ function addNewPizza(pizzaObj: Pizza) {
 * 4. returns the new order object (just in case we need it later)
 * */
 
+/**
+ * Challenge 8: add explicit return type to the rest of our function
+ * (void return type)
+ */
+
 // Defensive coding
-function placeOrder(pizzaName: string) {
+function placeOrder(pizzaName: string): Order | undefined{
     // Defensive coding
     const selectedPizza = menu.find(pizzaObj => pizzaObj.name === pizzaName); // replace find to filter
    if (!selectedPizza) {
@@ -74,7 +79,7 @@ function placeOrder(pizzaName: string) {
  * Note: you'll need to ensure that we're adding IDs to our orders when we create new orders. You can use a global `nextOrderId` variable and increment it every time a new order is created to simulate real IDs being managed for us by a database.
  */
 
-function completeOrder(orderId: number) {
+function completeOrder(orderId: number): Order | undefined {
     const orderComplete = orderQueue.find(order => order.id === orderId);
     // Defensive coding
     if(!orderComplete) {
@@ -83,6 +88,35 @@ function completeOrder(orderId: number) {
     }
     orderComplete.status = "completed";
     return orderComplete;
+}
+
+/*
+* Challenge 7: create a new utility function called getPizzaDetail. It will take
+ * a parameter called `identifier`, but there's a twist: we want this identifier
+ * to be allowed to either be the string name of the pizza (e.g. "Pepperoni"),
+ * OR to be the number ID of the pizza (e.g. 2).
+ *
+ * Don't worry about the code inside the function yet, just create the function
+ * signature, making sure to teach TS that the `identifier` parameter is allowed
+ * to either be a string or a number.
+ *
+ * (narrow type)
+* */
+
+/**
+ * Challenge (part 2): explicitly type the return value of this function
+ * to tell TypeScript it could either be a Pizza object or undefined
+ * as the return value.
+ */
+
+export function getPizzaDetail(identifier: string | number): Pizza | undefined {
+    if (typeof identifier === "string") {
+        return menu.find(pizza => pizza.name === identifier.toLowerCase());
+    } else if(!identifier) {
+        throw new Error(`Parameter ${identifier} must be a string or a number`);
+    } else {
+        return menu.find(pizza => pizza.id === identifier)
+    }
 }
 
 addNewPizza({ id: 5, name: "Chicken Bacon Ranch", price: 12});
@@ -95,3 +129,4 @@ completeOrder(1);
 console.log("Menu:", menu);
 console.log("Cash in register:", castInRegister);
 console.log("Order queue:", orderQueue);
+console.log(getPizzaDetail(1));

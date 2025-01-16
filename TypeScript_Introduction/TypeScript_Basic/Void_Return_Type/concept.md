@@ -1,0 +1,2 @@
+* In TypeScript (TS), the void return type indicates that a function does not return any value. 
+* This is useful for functions that perform actions but do not produce a result, such as logging to the console or modifying external variables.
