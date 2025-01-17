@@ -5,7 +5,7 @@
 
 // cập nhật một phần dữ liệu của một đối tượng:
 
-type Users = {
+export type Users = {
     id: number,
     username: string,
     role: "member" | "contributor" | "admin"
