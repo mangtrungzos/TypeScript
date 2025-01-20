@@ -26,10 +26,11 @@ const menu: Pizza[] = [
     { id: 2,name: "Pepperoni", price: 10},
     { id: 3,name: "Hawaiian", price: 10},
     { id: 4,name: "Veggie", price: 9},
-]
+];
 
 let castInRegister = 100;
 let nextOrderId = 1;
+let nextPizzaId = 1;
 const orderQueue: Order[] = [];
 
 /*
@@ -71,6 +72,22 @@ function placeOrder(pizzaName: string): Order | undefined{
     return newOrder;
 }
 
+/*
+* Challenge 9: add types our generic `addToArray` function. It should work for adding new pizzas to the `menu`
+* and add news orders to the `orderQueue`
+* */
+// Generics Type
+function addToArray<Type>(array: Type[], item: Type): Type[] {
+    array.push(item);
+    return array;
+}
+// example usage:
+addToArray<Pizza>(menu, { id: nextPizzaId++, name: "Chicken Bacon Ranch", price: 12 });
+addToArray<Order>(orderQueue, { id: nextOrderId++, pizza: menu[2], status: "completed" });
+
+console.log("Menu:", menu);
+console.log("OrderQueue:", orderQueue);
+
 /**
  * Challenge 2: write another utility function, completeOrder, that takes an orderId as a parameter
  * finds the correct order in the orderQueue, and marks its status as "completed". For good measure,
@@ -108,14 +125,14 @@ function completeOrder(orderId: number): Order | undefined {
  * to tell TypeScript it could either be a Pizza object or undefined
  * as the return value.
  */
-
+// Narrow Type - Check type in Union type (typeof)
 export function getPizzaDetail(identifier: string | number): Pizza | undefined {
     if (typeof identifier === "string") {
         return menu.find(pizza => pizza.name === identifier.toLowerCase());
     } else if(!identifier) {
         throw new Error(`Parameter ${identifier} must be a string or a number`);
     } else {
-        return menu.find(pizza => pizza.id === identifier)
+        return menu.find(pizza => pizza.id === identifier);
     }
 }
 

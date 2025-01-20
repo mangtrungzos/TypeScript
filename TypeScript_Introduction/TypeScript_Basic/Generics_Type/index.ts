@@ -10,5 +10,5 @@ function getLastItem<Type>(array: Type[]): Type | undefined {
 }
 
 console.log(getLastItem(gameScores));
-console.log(getLastItem(favoriteThings))
+console.log(getLastItem(favoriteThings));
 console.log(getLastItem(voters));

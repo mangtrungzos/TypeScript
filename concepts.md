@@ -62,3 +62,72 @@ identity(true);         // OK: T là boolean
 // Nếu cố tình truyền sai kiểu
 identity<number>("Test"); // Error: "Test" không phải là number
 ```
+# Union Type (|):
+*Type alias là một cách để đặt tên cho một kiểu dữ liệu cụ thể.*
+* Kết hợp các kiểu.
+* Định nghĩa một biến hoặc giá trị có thể thuộc một trong nhiều kiểu dữ liệu khác nhau.
+* type = ... | ... | ...;
+```ts
+type ID = number | string;
+
+let userId: ID = 2002; // valid
+userId = "Ngan"; // valid
+```
+* Check type in Union type - `typeof`
+```ts
+function values(value: number | string) {
+  if (typeof value === "number") {
+    console.log(`Number: ${value}`);
+  } else {
+    console.log(`String: ${value}`);
+  }
+}
+```
+# Alias Type:
+*type alias là một cách để đặt tên cho một kiểu dữ liệu cụ thể.*
+*Or là một cách để gán một tên cho một kiểu dữ liệu*
+
+* Type để định nghĩa một union type và đặt tên cho nó.
+```ts
+type ID = number | string;
+
+let userId: ID = 123;    // valid
+userId = "abc";          // valid
+// ID là một bí danh (alias) cho kiểu number | string. 
+// Bất kỳ giá trị nào thuộc kiểu này đều hợp lệ cho biến userId.
+```
+* Example usage:
+```ts
+// User là một alias cho union type
+type Admin = {
+  id: number;
+  role: "admin";
+};
+
+type Member = {
+  id: number;
+  role: "member";
+  group: string;
+};
+
+type User = Admin | Member;
+
+const user1: User = { id: 1, role: "admin" };               // Hợp lệ
+const user2: User = { id: 2, role: "member", group: "A" };  // Hợp lệ
+// const user3: User = { id: 3, role: "guest" };            // Lỗi
+```
+```ts
+// Union type in function
+type Input = number | string;
+
+function processInput(input: Input): void {
+    if (typeof input === "number") {
+        console.log(`Number: ${input}`);
+    } else {
+        console.log(`String: ${input}`);
+    }
+}
+
+processInput(123);    // Output: Number: 123
+processInput("abc");  // Output: String: abc
+```
