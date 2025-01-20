@@ -26,9 +26,13 @@ const menu: Pizza[] = [
 ]
 
 // Defensive coding
-function addNewPizza(pizzaObj: Pizza): void {
-    pizzaObj.id = nextPizzaId++;
-    menu.push(pizzaObj);
+function addNewPizza(pizzaObj: Omit<Pizza, "id">): Pizza {
+    const newPizza: Pizza = {
+        id: nextPizzaId++,
+        ...pizzaObj
+    }
+    menu.push(newPizza);
+    return newPizza;
 }
 
 /**
@@ -53,3 +57,4 @@ addNewPizza({ name: "Spicy Sausage", price: 11});
 console.log("Menu:", menu);
 // console.log("Cash in register:", castInRegister);
 // console.log("Order queue:", orderQueue);
+
