@@ -1,3 +1,11 @@
+# What we learned:
+1. Basic, literal, and custom type
+2. Optional properties
+3. Unions
+4. Type Narrowing
+5. Utility Type
+6. Generics
+
 * defining custom types
 
 # Omit Type:
